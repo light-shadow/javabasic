@@ -23,34 +23,98 @@ public class LinkedList implements List {
 	}
 	//将index上一个索引的指针指向o，将o的指针指向原index元素
 	public void add(int index , Object o){
+		if(head==null){
+			System.out.println("LinkedList长度为0");
+		}
+		if(index>size()){
+			System.out.println("IndexOutOfBound");
+		}
+		Node temp = head;
 		Node newnode = new Node();
 		newnode.setData(o);
-		
-		newnode.next = null;
+		for (int i = 0; i < index-1; i++) {
+			temp = temp.getNext();
+		}
+		if(temp.getNext()==null){
+			temp.setNext(newnode);
+			size ++;
+		}else{
+			temp.setNext(newnode);
+			newnode.setNext(temp.getNext());
+			size ++;
+		}
 		
 	}
 	public Object get(int index){
+		Node temp = head;
+		int a =0;
+		while (a<=index) {
+			temp = temp.getNext();
+			a += 1;
+			return temp.getData();
+		}
 		return null;
+		
 	}
 	public Object remove(int index){
-		return null;
+		if(head==null){
+			return null;
+		}
+		Node temp = head;
+		Object i = get(index);
+		while(temp.getNext()!=i){
+			temp = temp.getNext();
+		}
+		if(temp==null){
+			return null;
+		}
+		temp.setNext(temp.getNext().getNext());
+		size--;
+		
+		return i;
 	}
 	
 	public int size(){
-		return -1;
+		size = 0;
+		if (head==null) {
+			System.out.println("LikedList长度为0");
+			return size;
+		}
+		Node temp = head;
+		while(temp.getNext()!=null){
+			size += 1;
+			temp = temp.getNext();
+		}
+		return size;
 	}
 	
 	public void addFirst(Object o){
-		
+		Node newnode = new Node();
+		newnode.setData(o);
+		newnode.setNext(head);
+		size++;
 	}
+	
 	public void addLast(Object o){
-		
+		Node newnode = new Node();
+		newnode.setData(o);
+		tail.setNext(newnode);
+		newnode.setNext(null);
+		size++;
 	}
 	public Object removeFirst(){
-		return null;
+		if(head==null){
+			return null;
+		}
+		head.setNext(null);
+		return get(0);
 	}
 	public Object removeLast(){
-		return null;
+		Object i = get(size-1);
+		Node newnode = new Node();
+		newnode.setData(i);
+		newnode.setNext(null);
+		return i;
 	}
 	public Iterator iterator(){
 		return null;
